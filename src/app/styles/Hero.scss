@@ -1,0 +1,499 @@
+// measurements 
+// sewing machine
+$thread-height: 25px;
+$thread-width: 16px;
+$sm-top-height: 50px;
+$sm-top-width: 185px;
+$sm-right-arm-height: 50px;
+$sm-right-arm-width: 50px;
+$sm-left-arm-height: 11px;
+$sm-left-arm-width: 45px;
+$sm-base-height: 40px;
+$needle-height: 20px;
+//table
+$table-height: 15px;
+$table-width:450px;
+// tape
+$tape-height: 11px;
+$tape-width: 34px;
+// pin cushion 
+$pc-base-width: 50px;
+$pc-base-height: 6px;
+$pin-height: 20px;
+$pin-width: 1px;
+$pin-top-size: 4px;
+
+
+// colors
+// sewing machine
+$sm-clr: white;
+$sm-clr2: #5796e9;
+$knob-clr: #ffd1f8;
+$knob-clr2: #3d3d3d;
+$spool-clr: #b8a0a0;
+$spool-clr2: #8f7777;
+$thread-clr: #5796e9;
+$thread-clr2: #fff896;
+$fabric-clr: #fff89680;
+$fabric-clr2: #5796e980;
+$fabric-clr3: rgba(255, 184, 223, 0.9);
+// tape 
+$tape-clr: #fff896;
+$tape-clr2: #fdde51;
+$tape-ticks: #3d3d3d;
+$tape-ticks: #5796e9;
+$tape-btm-clr: #c2c2c2;
+// pin cushion 
+$pc-color: #ffd1f8;
+$pc-color2: #eea0cd;
+$pc-base-clr: #fffefb;
+$pc-base-clr2: #5796e9;
+$pin-clr: #cfcfcf;
+$pin-top-clr: #fc93d0;
+// table 
+$table-clr:#f1dbc1;
+$table-clr2:#5796e9;
+
+@mixin center-flex {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+*, *::before, *::after {
+  margin:0;
+  content: "";
+  box-sizing:border-box;
+}
+
+
+.sewing-stuff {
+  width:$table-width;
+  align-items:flex-end;
+  justify-content:space-around;
+  transform:translateY(-3px);
+  display:flex;
+}
+
+//table
+.table{
+  height: $table-height;
+  width: $table-width;
+  background-color:$table-clr;
+  border-bottom: 5px solid $table-clr2;
+}
+
+//tape
+.tape-top {
+  height: $tape-height;
+  width: $tape-width;
+  border-radius: 2px 0 0 1px;
+  background-color: $tape-clr;
+  box-shadow: 0 $tape-height * 0.25 $tape-clr2;
+  &::before,
+  &::after {
+    position: absolute;
+  }
+  // ticks
+  &::before {
+    height: $tape-height * 0.5;
+    width: $tape-width;
+    background-image: repeating-linear-gradient(
+      to right,
+      transparent,
+      transparent 11%,
+      $tape-ticks 11%,
+      $tape-ticks 16%
+    );
+  }
+  // fold
+  &::after {
+    height: 0;
+    width: 0;
+    border-style: solid;
+    border-width: ($tape-height + $tape-height * 0.3) 0 0
+      ($tape-height + $tape-height * 0.3);
+    border-color: transparent transparent transparent $tape-clr2;
+    margin-left: $tape-width;
+  }
+}
+
+// hanging tape
+.tape-bottom {
+  height: $tape-width * 1.45;
+  width: $tape-height;
+  position: absolute;
+  background-color: $tape-clr;
+  margin-left: $tape-width;
+  margin-top: $tape-height * 0.3;
+  box-shadow: $tape-height * 0.25 0 $tape-clr2;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+  }
+  // hanging tape ticks
+  &::before {
+    height: $tape-width * 1.4;
+    width: 55%;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 10%,
+      $tape-ticks 10%,
+      $tape-ticks 13%
+    );
+  }
+  // hanging tape end
+  &::after {
+    height: $tape-height;
+    width: $tape-height;
+    margin-top: $tape-width * 1.45;
+    border-radius: 0 0 1px 1px;
+    box-shadow: $tape-height * 0.25 0 #a5a4a4;
+    background-color: #666666;
+    border: $tape-height * 0.2 solid $tape-btm-clr;
+  }
+}
+
+
+
+.pin-cushion {
+  // border: 1px solid #7ab1fd;
+  height: $pc-base-height;
+  width: $pc-base-width;
+  position: relative;
+  border-radius: 1px 1px 1px 1px;
+  background-color: $pc-base-clr;
+  box-shadow: 0 3px $pc-base-clr2;
+  // cushion
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    height: $pc-base-width * 0.45;
+    box-shadow: 0 $pc-base-width * 0.08 $pc-color2;
+    width: $pc-base-width * 0.9;
+    background-color: $pc-color;
+    border-radius: 10em 10em 0 0;
+    transform: translateY(-27px) translateX(2.4px);
+  }
+}
+
+// pins
+.pins {
+  display: flex;
+  z-index: 5;
+  position: absolute;
+  justify-content: space-around;
+  transform: translateY(-$pin-height * 1.5);
+}
+.pin {
+  z-index: 5;
+  margin-right: 8.5px;
+  height: $pin-height;
+  width: $pin-width;
+  background-image: linear-gradient(to bottom, gray, $pin-clr);
+  &::before {
+    position: absolute;
+    display: flex;
+    height: $pin-top-size;
+    width: $pin-top-size;
+    border-radius: 50%;
+    background-color: $tape-ticks;
+ 
+    transform: translateX(-$pin-width * 1.4) translateY(-$pin-width * 4);
+  }
+}
+
+// pin positioning 
+.pin:nth-child(1) {
+  transform: rotate(-35deg) translateY(5px);
+}
+.pin:nth-child(2) {
+  transform: rotate(-20deg);
+}
+.pin:nth-child(3) {
+  transform: rotate(-9deg) translateY(-3px);
+}
+.pin:nth-child(4) {
+  transform: rotate(3deg) translateY(-3px);
+}
+.pin:nth-child(5) {
+  transform: rotate(20deg) translateY(-1px);
+}
+.pin:nth-child(6) {
+  transform: rotate(35deg) translateY(5px);
+}
+
+
+// Sewing Machine
+//thread 
+.thread {
+  height: $thread-height;
+  width: $thread-width;
+  transform: translateX(142px);
+  background-image: repeating-linear-gradient(
+    35deg,
+    $thread-clr,
+    $thread-clr 0 5%,
+    $thread-clr2 5% 10%
+  );
+  // spool
+  &::before {
+    display: flex;
+    height: $thread-height;
+    width: $thread-width * 1.22;
+    border-radius: 0.5px;
+    transform: translateX(-2px);
+    border-radius: 2px;
+    background-image: linear-gradient(
+      to bottom,
+      $spool-clr 0 10%,
+      $spool-clr2 10% 20%,
+      transparent 20% 80%,
+      $spool-clr 80% 90%,
+      $spool-clr2 90%
+    );
+  }
+  // thread
+  &::after {
+    display: flex;
+    height: 1px;
+    width: 105px;
+    background-color: $thread-clr;
+    transform: translateX(-104px) translateY(-9.5px) rotate(-9.5deg);
+  }
+}
+
+// needle
+.needle {
+  position: absolute;
+  height: $needle-height;
+  width: 3.5px;
+  background-color: $knob-clr;
+  transform: translateY($sm-top-height + $sm-left-arm-height)
+    translateX($sm-left-arm-width/2.2);
+  &::before {
+    display: flex;
+    height: $needle-height * 0.9;
+    width: 8px;
+    border-radius: 0.5px;
+    transform: translateX(-2px) translateY(3px);
+    background-image: linear-gradient(
+      to bottom,
+      $knob-clr2 0 20%,
+      transparent 20% 85%,
+      $knob-clr2 85%
+    );
+  }
+  &::after {
+    display: flex;
+    height: 15px;
+    width: 1px;
+    background-color: $knob-clr2;
+    transform: translateY(2px) translateX(1.2px);
+    border-radius: 0 0 50% 50%;
+  }
+}
+
+// machine top 
+.machine-top {
+display: flex;
+  height: $sm-top-height;
+  width: $sm-top-width;
+  border-radius: 5px 5px 0 0px;
+  background-color: $sm-clr;
+  box-shadow: 0 4px $sm-clr2, 0px 0px 4px rgb(169, 194, 250);
+  // left arm
+  &::before {
+    content: "";
+    height: $sm-left-arm-height;
+    width: $sm-left-arm-width;
+    position: absolute;
+    border-radius: 0 0 1px 1px;
+    transform: translateY($sm-top-height);
+    box-shadow: 0 3px $sm-clr2;
+
+    background-color: $sm-clr;
+  }
+  // screen display
+  &::after {
+    content: "";
+    background-image: linear-gradient($knob-clr 0 80%, $knob-clr2 80%);
+    height: $sm-top-height * 0.3;
+    width: $sm-top-height * 0.8;
+    transform: translateX($sm-top-height * 1.5) translateY($sm-top-height / 2.5);
+  }
+}
+
+// machine right 
+.machine-right {
+  height: $sm-right-arm-height;
+  width: $sm-right-arm-width;
+  background-color: $sm-clr;
+  box-shadow: -4px 0px $sm-clr2, 0px 3px 2px $sm-clr2;
+  transform: translateX(135px);
+  // knob
+  &::before {
+    height: $sm-top-height/1.4;
+    width: $sm-top-height / 4;
+    position: absolute;
+    border-radius: 0 25% 25% 0;
+    transform: translateY(-20px) translateX(50px);
+    background-image: linear-gradient(
+      to right,
+      $knob-clr 0 70%,
+      $knob-clr2 70%
+    );
+  }
+  // buttons
+  &::after {
+    display: flex;
+    height: $sm-top-height * 0.6;
+    width: $sm-right-arm-width * 0.2;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      #ffe6e6 0 10%,
+      $knob-clr2 10% 20%,
+      transparent 20% 40%
+    );
+    transform: translateX(18px) translateY(10px);
+  }
+}
+
+// machine bottom 
+.machine-bottom {
+  height: $sm-base-height;
+  width: $sm-top-width + 15px;
+  border-radius: 5px 0 0 0px;
+  background-color: $sm-clr;
+  transform: translateX(-15px);
+  box-shadow: 0 3px $sm-clr2, 0px 2px 2px $sm-clr2;
+  // fabric
+  &::before {
+    display: flex;
+    height: 85px;
+    width: 125px;
+    background-image: repeating-linear-gradient(
+        $fabric-clr,
+        $fabric-clr 5%,
+        $fabric-clr2 5% 10%
+      ),
+      repeating-linear-gradient(
+        90deg,
+        $fabric-clr3,
+        $fabric-clr3 5%,
+        transparent 5% 10%
+      );
+    clip-path: polygon(30% 0%, 90% 0%, 90% 20%, 30% 45%);
+  }
+}
+
+
+// Animations 
+@keyframes needle-animation {
+  50% {
+    transform: translateY(-4.5px) translateX(1.2px);
+  }
+}
+
+.needle::after {
+  animation: needle-animation 0.2s infinite;
+}
+
+@keyframes thread-animation {
+  50% {
+   background-image: repeating-linear-gradient(
+    35deg,
+    $thread-clr2,
+    $thread-clr2 0 5%,
+    $thread-clr 5% 10%
+  );
+  } 
+}
+
+@keyframes thread-animation2 {
+  50% {
+    transform-origin: center left;
+    transform: translateX(-105px) translateY(-1px) rotate(0deg);
+  }
+}
+
+.thread {
+  animation: thread-animation 2s infinite;
+  &::after {
+    animation: thread-animation2 2s infinite;
+  }
+}
+
+
+@keyframes fabric-animation {
+  50% {
+    content: "bob";
+    display: flex;
+    height: 200px;
+    width: 125px;
+    background-image: repeating-linear-gradient(
+        $fabric-clr,
+        $fabric-clr 5%,
+        $fabric-clr2 5% 10%
+      ),
+      repeating-linear-gradient(
+        90deg,
+        $fabric-clr3,
+        $fabric-clr3 5%,
+        transparent 5% 10%
+      );
+    clip-path: polygon(30% 0%, 90% 0%, 90% 20%, 30% 45%);
+  }
+}
+.machine-bottom::before {
+  animation: fabric-animation 7s infinite;
+}
+
+// Extends tape length
+@keyframes tape-animation1 {
+  50% {
+    height: $tape-width * 3;
+  }
+}
+// Extends tape ticks
+@keyframes tape-animation2 {
+  50% {
+    height: $tape-width * 3;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 6%,
+      $tape-ticks 6%,
+      $tape-ticks 7.5%
+    );
+  }
+}
+// Drops tape end
+@keyframes tape-animation3 {
+  50% {
+    transform: translateY($tape-width * 1.55);
+  }
+}
+
+.tape-bottom {
+   animation: tape-animation1 3s infinite;
+}
+.tape-bottom::before {
+   animation: tape-animation2 3s infinite;
+}
+.tape-bottom::after{
+  animation: tape-animation3 3s infinite;
+}
+  
+  @keyframes pin-animation {
+  50% {
+    background-color: $pin-top-clr;
+  }
+}
+
+.pin::before {
+   animation: pin-animation 3s infinite;
+}
